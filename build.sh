@@ -24,13 +24,18 @@ mkdir -p build && cd build
 
     test -d zfs || git clone --single-branch --progress -b zfs-2.2-release https://github.com/openzfs/zfs.git --depth=100
 
+    cd linux
+    make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- rockchip_linux_defconfig
+    make prepare
+    cd ../
+
     cd zfs
     ./autogen.sh
     ./configure --enable-linux-builtin --with-linux=../linux/
     ./copy-builtin ../linux/
     cd linux
 
-    make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- rockchip_linux_defconfig
+    
     sed -i 's/# CONFIG_ZFS is not set/CONFIG_ZFS=y/' .config
     make KERNELRELEASE="$(make kernelversion)" KBUILD_IMAGE="arch/arm64/boot/Image" CROSS_COMPILE=aarch64-linux-gnu- ARCH=arm64 -j "$(nproc)" bindeb-pkg
 
