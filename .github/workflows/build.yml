@@ -56,7 +56,7 @@ jobs:
 
       - name: Build kernel
         shell: bash
-        run: sudo ./build.sh
+        run: pwd; chmod +x build.sh; sudo ./build.sh
 
       # - name: Build u-boot
       #   shell: bash
