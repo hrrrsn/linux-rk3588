@@ -33,7 +33,7 @@ mkdir -p build && cd build
     ./autogen.sh
     ./configure --enable-linux-builtin --with-linux=../linux/
     ./copy-builtin ../linux/
-    cd linux
+    cd ../linux
 
     
     sed -i 's/# CONFIG_ZFS is not set/CONFIG_ZFS=y/' .config
