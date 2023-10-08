@@ -33,6 +33,7 @@ mkdir -p build && cd build
     ./autogen.sh
     ./configure --enable-linux-builtin --with-linux=../linux/
     ./copy-builtin ../linux/
+    pwd
     cd ../linux
 
     
