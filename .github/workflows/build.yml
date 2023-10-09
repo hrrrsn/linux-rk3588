@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         kernel:
-          - 6.5-rc2-panthor-rk3588
+          # - 6.5-rc2-panthor-rk3588
           - 6.6-rc4-rk3588
 
     steps:
@@ -37,6 +37,6 @@ jobs:
           path: ${{ runner.workspace }}/build/*${{ matrix.kernel }}*.deb
           if-no-files-found: error
 
-      # - name: Clean cache
-      #   shell: bash
-      #   run: sync && sudo rm -rf ./images/ ./build/ && sync
+      - name: Clean artifacts
+        shell: bash
+        run: rm ${{ runner.workspace }}/build/*${{ matrix.kernel }}*.deb
