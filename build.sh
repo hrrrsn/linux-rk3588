@@ -1,28 +1,28 @@
 #!/bin/bash
-
+# Linux kernel build script for Rockchip RK3588
 set -eE 
 trap 'echo Error: in $0 on line $LINENO' ERR
 
-if [ "$(id -u)" -ne 0 ]; then 
-    echo "Please run as root"
-    exit 1
-fi
+    if [ "$(id -u)" -ne 0 ]; then 
+        echo "Please run as root"
+        exit 1
+    fi
 
-if [ -z "$1" ]; then
-    echo "No kernel version specified. Exiting."
-    exit 1
-fi
+    if [ -z "$1" ]; then
+        echo "No kernel version specified. Exiting."
+        exit 1
+    fi
 
-LINUX_VERSION=$1
-source "config/${LINUX_VERSION}"
+    LINUX_VERSION=$1
+    source "config/${LINUX_VERSION}"
 
-echo "Building Linux ${LINUX_VERSION} for Rockchip RK3588"
+    echo "Building Linux ${LINUX_VERSION} for Rockchip RK3588"
 
-export ARCH=arm64
-export CROSS_COMPILE=aarch64-linux-gnu-
+    export ARCH=arm64
+    export CROSS_COMPILE=aarch64-linux-gnu-
 
-cd "$(dirname -- "$(readlink -f -- "$0")")" && cd ..
-mkdir -p build && cd build
+    cd "$(dirname -- "$(readlink -f -- "$0")")" && cd ..
+    mkdir -p build && cd build
 
 
     if [ ! -d "linux-${LINUX_GIT_BRANCH}" ]; then
