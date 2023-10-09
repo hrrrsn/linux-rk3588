@@ -3,6 +3,10 @@ run-name: Build with mainline Linux 6.6.0-rc4
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - '*'
+
 
 jobs:
   build:
