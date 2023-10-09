@@ -3,9 +3,9 @@ run-name: Build Linux Kernel for Rockchip RK3588
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - '*'
+  # push:
+  #   branches:
+  #     - '*'
 
 jobs:
   build:
