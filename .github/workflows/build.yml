@@ -56,7 +56,8 @@ jobs:
 
       - name: Build kernel
         shell: bash
-        run: sudo ./build.sh 6.5-rc2-panthor-rk3588
+        run: pwd
+        #sudo ./build.sh 6.5-rc2-panthor-rk3588
 
       # - name: Build u-boot
       #   shell: bash
