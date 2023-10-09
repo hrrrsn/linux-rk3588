@@ -1,12 +1,11 @@
-name: Build Mainline
-run-name: Build with mainline Linux 6.6.0-rc4
+name: Build Kernel
+run-name: Build Linux Kernel for Rockchip RK3588
 
 on:
   workflow_dispatch:
   push:
     branches:
       - '*'
-
 
 jobs:
   build:
@@ -16,7 +15,7 @@ jobs:
       matrix:
         kernel:
           - 6.5-rc2-panthor-rk3588
-          # - orangepi-5
+          - 6.6-rc4-rk3588
 
     steps:
       - name: Checkout code
@@ -27,39 +26,16 @@ jobs:
         run: |
           sudo apt-get install gcc make libncurses-dev bison flex libssl-dev fakeroot bc autoconf automake libtool build-essential debhelper zlib1g-dev uuid-dev libblkid-dev -y
 
-      - name: Build ${{ matrix.kernel }}
-        shell: bash
-        run: sudo ./build.sh ${{ matrix.kernel }}
-
-      # - name: Build u-boot
+      # - name: Build ${{ matrix.kernel }}
       #   shell: bash
-      #   run: sudo ./build.sh -b ${{ matrix.platform }} --mainline --uboot-only
-
-      # - name: Build image
-      #   shell: bash
-      #   run: sudo ./build.sh --board ${{ matrix.platform }} --mainline --server-only
-
-      # - name: Upload built debs
-      #   shell: bash
-      #   run: cd ../; mkdir images; sudo mv build/*.deb images/; sudo mv images/ linux-rk3588/images/;
-
-      - name: dump
-        run: |
-          echo 'github.workspace === ${{ github.workspace }}'
-          echo "GITHUB_WORKSPACE === $GITHUB_WORKSPACE"
-          echo 'runner.workspace === ${{ runner.workspace }}'
-          echo "RUNNER_WORKSPACE === $RUNNER_WORKSPACE"
+      #   run: sudo ./build.sh ${{ matrix.kernel }}
 
       - name: Upload server image
         uses: actions/upload-artifact@v3
         with:
-          name: linux-${{ matrix.kernel }}
-          path: images/*
+          name: ${{ matrix.kernel }}
+          path: ${{ runner.workspace }}/build/*${{ matrix.kernel }}*.deb
           if-no-files-found: error
-
-      # - name: Clean images
-      #   shell: bash
-      #   run: sudo rm -rf images/*.deb
 
       # - name: Clean cache
       #   shell: bash
