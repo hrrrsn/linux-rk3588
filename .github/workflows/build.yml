@@ -60,8 +60,7 @@ jobs:
 
       - name: Build kernel
         shell: bash
-        run: pwd
-        #sudo ./build.sh 6.5-rc2-panthor-rk3588
+        run: sudo ./build.sh 6.5-rc2-panthor-rk3588
 
       # - name: Build u-boot
       #   shell: bash
@@ -78,7 +77,7 @@ jobs:
       - name: Upload server image
         uses: actions/upload-artifact@v3
         with:
-          name: linux-mainline-server-${{ matrix.platform }}-image
+          # name: linux-mainline-server-${{ matrix.platform }}-image
           #test-${{ matrix.platform }}-test
           path: images/*
           if-no-files-found: error
