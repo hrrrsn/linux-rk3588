@@ -24,7 +24,6 @@ trap 'echo Error: in $0 on line $LINENO' ERR
     cd "$(dirname -- "$(readlink -f -- "$0")")" && cd ..
     mkdir -p build && cd build
 
-
     if [ ! -d "linux-${LINUX_GIT_BRANCH}" ]; then
         echo "git clone: ${LINUX_GIT_REPO} ${LINUX_GIT_BRANCH}"
         git clone --single-branch --progress -b $LINUX_GIT_BRANCH $LINUX_GIT_REPO --depth=100 "linux-${LINUX_GIT_BRANCH}"
