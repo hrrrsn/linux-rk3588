@@ -70,8 +70,9 @@ jobs:
       - name: Upload server image
         uses: actions/upload-artifact@v3
         with:
-          name: test-${{ matrix.platform }}-test
-          path: ./build/linux*.deb
+          name: linux-mainline-server-${{ matrix.platform }}-image
+          #test-${{ matrix.platform }}-test
+          path: ./build/*.deb
           if-no-files-found: error
     
       # - name: Clean cache
