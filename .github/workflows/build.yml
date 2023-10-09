@@ -25,7 +25,8 @@ jobs:
       - name: Install dependencies
         shell: bash
         run: |
-          sudo apt-get install gcc make libncurses-dev bison flex libssl-dev fakeroot bc autoconf automake libtool build-essential debhelper zlib1g-dev uuid-dev libblkid-dev -y
+          sudo apt-get install gcc make libncurses-dev bison flex libssl-dev fakeroot bc autoconf automake libtool build-essential debhelper zlib1g-dev uuid-dev libblkid-dev \
+          git -y
 
       - name: Build ${{ matrix.kernel }}
         shell: bash
