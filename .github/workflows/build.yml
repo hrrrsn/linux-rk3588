@@ -73,7 +73,7 @@ jobs:
 
       - name: Upload built debs
         shell: bash
-        run: cd ../; sudo mv build/*.deb images/; sudo mv images/ linux-rk3588/images/;
+        run: cd ../; mkdir images; sudo mv build/*.deb images/; sudo mv images/ linux-rk3588/images/;
 
       - name: Upload server image
         uses: actions/upload-artifact@v3
