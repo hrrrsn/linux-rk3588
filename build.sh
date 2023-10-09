@@ -50,7 +50,7 @@ mkdir -p build && cd build
         make prepare
     cd ../
 
-    cd zfs
+    cd "zfs-${ZFS_GIT_BRANCH}"
         ./autogen.sh
 
         if [ "$(uname -m)" = "x86_64" ]; then
@@ -58,7 +58,7 @@ mkdir -p build && cd build
         else
             ./configure --enable-linux-builtin --with-linux="../linux-${LINUX_GIT_BRANCH}/"
         fi
-        
+
         ./copy-builtin "../linux-${LINUX_GIT_BRANCH}/" 
     cd "../linux-${LINUX_GIT_BRANCH}/"
 
