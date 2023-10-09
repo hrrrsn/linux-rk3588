@@ -9,13 +9,13 @@ on:
 
 jobs:
   build:
-    runs-on: hetz
+    runs-on: self-hosted
 
     strategy:
       matrix:
         kernel:
-          # - 6.5-rc2-panthor-rk3588
-          # - 6.6-rc4-rk3588
+          - 6.5-rc2-panthor-rk3588
+          - 6.6-rc4-rk3588
           - 6.6-rc5-rk3588
 
     steps:
@@ -41,4 +41,4 @@ jobs:
 
       - name: Clean artifacts
         shell: bash
-        run: rm ${{ runner.workspace }}/build/*${{ matrix.kernel }}*.deb
+        run: sudo rm ${{ runner.workspace }}/build/*${{ matrix.kernel }}*.deb
