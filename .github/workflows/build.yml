@@ -72,7 +72,7 @@ jobs:
         with:
           name: linux-mainline-server-${{ matrix.platform }}-image
           #test-${{ matrix.platform }}-test
-          path: ./build/*.deb
+          path: ../build/*6.5-rc2-panthor-rk3588*.deb
           if-no-files-found: error
     
       # - name: Clean cache
