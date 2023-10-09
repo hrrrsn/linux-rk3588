@@ -35,22 +35,22 @@ mkdir -p build && cd build
 #     rm -f ../*.buildinfo ../*.changes
 # else
     echo "git clone: ${LINUX_GIT_REPO} ${LINUX_GIT_BRANCH}"
-    test -d linux ||  git clone --single-branch --progress -b $LINUX_GIT_BRANCH $LINUX_GIT_REPO --depth=100
+    test -d "linux-${LINUX_GIT_BRANCH}" ||  git clone --single-branch --progress -b $LINUX_GIT_BRANCH $LINUX_GIT_REPO --depth=100 "linux-${LINUX_GIT_BRANCH}"
 
     echo "git clone: ${ZFS_GIT_REPO} ${ZFS_GIT_BRANCH}"
     test -d zfs || git clone --single-branch --progress -b $ZFS_GIT_BRANCH $ZFS_GIT_REPO --depth=100
 
-    cd linux
+    cd "linux-${LINUX_GIT_BRANCH}" 
         make $LINUX_DEFCONFIG
         make prepare
     cd ../
 
     cd zfs
         ./autogen.sh
-        ./configure --host=aarch64-linux-gnu --enable-linux-builtin --with-linux=../linux/
+        ./configure --host=aarch64-linux-gnu --enable-linux-builtin --with-linux="../linux-${LINUX_GIT_BRANCH}/" 
         # --build=x86_64-linux 
-        ./copy-builtin ../linux/
-    cd ../linux
+        ./copy-builtin "../linux-${LINUX_GIT_BRANCH}/" 
+    cd "../linux-${LINUX_GIT_BRANCH}/"
 
     #sed -i 's/# CONFIG_ZFS is not set/CONFIG_ZFS=y/' .config
         grep -q "^CONFIG_ZFS=" .config || echo "CONFIG_ZFS=y" >> .config
