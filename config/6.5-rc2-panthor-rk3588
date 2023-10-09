@@ -1,0 +1,8 @@
+LINUX_GIT_REPO="https://github.com/Joshua-Riek/linux.git"
+LINUX_GIT_BRANCH="v6.5-rc2-panthor-rk3588"
+LINUX_DEFCONFIG="linux-rockchip-rk3588_defconfig"
+
+ZFS_GIT_REPO="https://github.com/openzfs/zfs.git"
+ZFS_GIT_BRANCH="zfs-2.2-release"
+
+LINUX_VERSION="6.5-rc2-panthor-rk3588"
