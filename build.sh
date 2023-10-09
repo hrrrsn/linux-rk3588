@@ -68,6 +68,3 @@ trap 'echo Error: in $0 on line $LINENO' ERR
     make KERNELRELEASE=$LINUX_VERSION KBUILD_IMAGE="arch/arm64/boot/Image" ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j "$(nproc)" bindeb-pkg
 
     rm -f ../linux-image-*dbg*.deb ../linux-libc-dev_*.deb ../*.buildinfo ../*.changes ../*.dsc ../*.tar.gz
-
-
-#

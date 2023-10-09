@@ -25,8 +25,24 @@ jobs:
       - name: Install dependencies
         shell: bash
         run: |
-          sudo apt-get install gcc make libncurses-dev bison flex libssl-dev fakeroot bc autoconf automake libtool build-essential debhelper zlib1g-dev uuid-dev libblkid-dev \
-          git -y
+          if [ $(uname -m) = "x86_64" ]; then
+            sudo dpkg --add-architecture arm64
+            sudo apt-get update
+            sudo apt-get install qemu-user-static crossbuild-essential-arm64 \
+            zlib1g-dev:arm64 uuid-dev:arm64 libblkid-dev:arm64 libssl-dev:arm64 \
+            libelf-dev:arm64 uuid-dev:arm64 libudev-dev:arm64 -y
+          fi
+
+          sudo apt-get install gcc make libncurses-dev bison flex libssl-dev \
+            fakeroot bc autoconf automake libtool build-essential debhelper \
+            gcc make libncurses-dev bison flex libssl-dev fakeroot bc autoconf \
+            automake libtool build-essential debhelper zlib1g-dev uuid-dev \
+            libblkid-dev build-essential gcc-aarch64-linux-gnu bison \
+            qemu-user-static qemu-system-arm qemu-efi u-boot-tools \
+            binfmt-support debootstrap flex libssl-dev bc rsync kmod cpio \
+            xz-utils fakeroot parted udev dosfstools uuid-runtime git-lfs \
+            device-tree-compiler bc debhelper libelf-dev pkg-config \
+            zlib1g-dev uuid-dev libblkid-dev git -y
 
       - name: Build ${{ matrix.kernel }}
         shell: bash
