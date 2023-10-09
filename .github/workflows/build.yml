@@ -70,7 +70,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: test-${{ matrix.platform }}-test
-          path: ./linux*.deb
+          path: ./build/linux*.deb
           if-no-files-found: error
     
       # - name: Clean cache
