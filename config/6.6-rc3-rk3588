@@ -1,0 +1,8 @@
+LINUX_GIT_REPO="https://github.com/Joshua-Riek/linux.git"
+LINUX_GIT_BRANCH="v6.6-rc3-rk3588"
+LINUX_DEFCONFIG="rockchip_linux_defconfig"
+
+ZFS_GIT_REPO="https://github.com/openzfs/zfs.git"
+ZFS_GIT_BRANCH="master"
+
+LINUX_VERSION="6.6-rc3-rk3588"
