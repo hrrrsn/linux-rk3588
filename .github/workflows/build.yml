@@ -56,7 +56,7 @@ jobs:
 
       - name: Build kernel
         shell: bash
-        run: pwd; chmod +x build.sh; sudo ./build.sh
+        run: chmod +x build.sh; sudo ./build.sh
 
       # - name: Build u-boot
       #   shell: bash
@@ -66,12 +66,12 @@ jobs:
       #   shell: bash
       #   run: sudo ./build.sh --board ${{ matrix.platform }} --mainline --server-only
 
-      # - name: Upload server image
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: ubuntu-22.04.3-preinstalled-server-arm64-${{ matrix.platform }}-mainline-6.6.0-rc4
-      #     path: ./images/ubuntu-22.04.3-preinstalled-server-arm64-${{ matrix.platform }}-mainline-6.6.0-rc4.*
-      #     if-no-files-found: error
+      - name: Upload server image
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-${{ matrix.platform }}-test
+          path: ./linux*.deb
+          if-no-files-found: error
     
       # - name: Clean cache
       #   shell: bash

@@ -8,6 +8,20 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
+LINUX_GIT_REPO="https://github.com/Joshua-Riek/linux.git"
+LINUX_GIT_BRANCH="v6.5-rc2-panthor-rk3588"
+LINUX_DEFCONFIG="linux-rockchip-rk3588_defconfig"
+
+ZFS_GIT_REPO="https://github.com/openzfs/zfs.git"
+ZFS_GIT_BRANCH="zfs-2.2-release"
+
+LINUX_VERSION="6.5-rc2-panthor-rk3588"
+
+echo "Building Linux ${LINUX_VERSION} for Rockchip RK3588"
+
+export ARCH=arm64
+export CROSS_COMPILE=aarch64-linux-gnu-
+
 cd "$(dirname -- "$(readlink -f -- "$0")")" && cd ..
 mkdir -p build && cd build
 
@@ -20,25 +34,30 @@ mkdir -p build && cd build
 
 #     rm -f ../*.buildinfo ../*.changes
 # else
-    test -d linux ||  git clone --single-branch --progress -b v6.6-rc4-rk3588 https://github.com/Joshua-Riek/linux.git --depth=100
+    echo "git clone: ${LINUX_GIT_REPO} ${LINUX_GIT_BRANCH}"
+    test -d linux ||  git clone --single-branch --progress -b $LINUX_GIT_BRANCH $LINUX_GIT_REPO --depth=100
 
-    test -d zfs || git clone --single-branch --progress -b zfs-2.2-release https://github.com/openzfs/zfs.git --depth=100
+    echo "git clone: ${ZFS_GIT_REPO} ${ZFS_GIT_BRANCH}"
+    test -d zfs || git clone --single-branch --progress -b $ZFS_GIT_BRANCH $ZFS_GIT_REPO --depth=100
 
     cd linux
-    make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- rockchip_linux_defconfig
-    make prepare
+        make $LINUX_DEFCONFIG
+        make prepare
     cd ../
 
     cd zfs
-    ./autogen.sh
-    ./configure --enable-linux-builtin --with-linux=../linux/
-    ./copy-builtin ../linux/
-    pwd
+        ./autogen.sh
+        ./configure --host=aarch64-linux-gnu --enable-linux-builtin --with-linux=../linux/
+        # --build=x86_64-linux 
+        ./copy-builtin ../linux/
     cd ../linux
 
-    
-    sed -i 's/# CONFIG_ZFS is not set/CONFIG_ZFS=y/' .config
-    make KERNELRELEASE="$(make kernelversion)" KBUILD_IMAGE="arch/arm64/boot/Image" CROSS_COMPILE=aarch64-linux-gnu- ARCH=arm64 -j "$(nproc)" bindeb-pkg
+    #sed -i 's/# CONFIG_ZFS is not set/CONFIG_ZFS=y/' .config
+        grep -q "^CONFIG_ZFS=" .config || echo "CONFIG_ZFS=y" >> .config
+        grep -q "^CONFIG_SPL=" .config || echo "CONFIG_SPL=y" >> .config
+
+        make prepare
+        make KERNELRELEASE=$LINUX_VERSION KBUILD_IMAGE="arch/arm64/boot/Image" -j "$(nproc)" bindeb-pkg
 
     rm -f ../linux-image-*dbg*.deb ../linux-libc-dev_*.deb ../*.buildinfo ../*.changes ../*.dsc ../*.tar.gz
 # fi
