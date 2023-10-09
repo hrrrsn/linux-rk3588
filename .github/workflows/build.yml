@@ -26,9 +26,9 @@ jobs:
         run: |
           sudo apt-get install gcc make libncurses-dev bison flex libssl-dev fakeroot bc autoconf automake libtool build-essential debhelper zlib1g-dev uuid-dev libblkid-dev -y
 
-      # - name: Build ${{ matrix.kernel }}
-      #   shell: bash
-      #   run: sudo ./build.sh ${{ matrix.kernel }}
+      - name: Build ${{ matrix.kernel }}
+        shell: bash
+        run: sudo ./build.sh ${{ matrix.kernel }}
 
       - name: Upload server image
         uses: actions/upload-artifact@v3
