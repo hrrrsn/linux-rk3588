@@ -71,15 +71,22 @@ jobs:
       #   shell: bash
       #   run: sudo ./build.sh --board ${{ matrix.platform }} --mainline --server-only
 
+      - name: Upload built debs
+        shell: bash
+        run: cd ../; sudo mv build/*.deb images/; sudo mv images/ linux-rk3588/images/;
+
       - name: Upload server image
         uses: actions/upload-artifact@v3
         with:
           name: linux-mainline-server-${{ matrix.platform }}-image
           #test-${{ matrix.platform }}-test
-          path: build/*6.5-rc2-panthor-rk3588*.deb
-
+          path: images/*
           if-no-files-found: error
-    
+
+      # - name: Clean images
+      #   shell: bash
+      #   run: sudo rm -rf images/*.deb
+
       # - name: Clean cache
       #   shell: bash
       #   run: sync && sudo rm -rf ./images/ ./build/ && sync
