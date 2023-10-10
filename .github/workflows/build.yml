@@ -40,7 +40,7 @@ jobs:
             gcc make libncurses-dev bison flex libssl-dev fakeroot bc autoconf \
             automake libtool build-essential debhelper zlib1g-dev uuid-dev \
             libblkid-dev build-essential gcc-aarch64-linux-gnu bison \
-            qemu-user-static qemu-system-arm qemu-efi u-boot-tools \
+            qemu-user-static qemu-system-arm qemu-efi \
             binfmt-support debootstrap flex libssl-dev bc rsync kmod cpio \
             xz-utils fakeroot parted udev dosfstools uuid-runtime git-lfs \
             device-tree-compiler bc debhelper libelf-dev pkg-config \
