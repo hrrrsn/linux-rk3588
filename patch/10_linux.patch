@@ -1,0 +1,15 @@
+--- 10_linux_ori	2023-10-10 20:31:31.999330925 +1300
++++ 10_linux	2023-10-10 20:33:47.954499596 +1300
+@@ -209,6 +209,12 @@
+ 	initrd	$(echo $initrd_path)
+ EOF
+   fi
++    sed "s/^/$submenu_indentation/" << EOF
++  smbios -t 11 -s 4 --set=devicetreename
++  if [ -f /usr/lib/linux-image-${version}/rockchip/\$devicetreename ];then
++    devicetree /usr/lib/linux-image-${version}/rockchip/\$devicetreename
++  fi
++EOF
+   sed "s/^/$submenu_indentation/" << EOF
+ }
+ EOF
