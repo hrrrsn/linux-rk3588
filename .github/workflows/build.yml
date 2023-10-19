@@ -15,10 +15,11 @@ jobs:
       matrix:
         kernel:
           - 6.5-rc2-panthor-rk3588
-          - 6.5-rk3588
-          - 6.6-rc3-rk3588
-          - 6.6-rc4-rk3588
+        #  - 6.5-rk3588
+        #  - 6.6-rc3-rk3588
+        #  - 6.6-rc4-rk3588
           - 6.6-rc5-rk3588
+          - 6.6-rc6-rk3588
 
     steps:
       - name: Checkout code
