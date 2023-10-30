@@ -18,8 +18,8 @@ jobs:
         #  - 6.5-rk3588
         #  - 6.6-rc3-rk3588
         #  - 6.6-rc4-rk3588
-          - 6.6-rc5-rk3588
-          - 6.6-rc6-rk3588
+        #  - 6.6-rc5-rk3588
+        #  - 6.6-rc6-rk3588
           - 6.6-rc7-rk3588
 
     steps:
@@ -58,7 +58,7 @@ jobs:
           name: ${{ matrix.kernel }}
           path: ${{ runner.workspace }}/build/*${{ matrix.kernel }}*.deb
           if-no-files-found: error
-          retention-days: 7
+          retention-days: 30
 
       - name: Clean artifacts
         shell: bash
