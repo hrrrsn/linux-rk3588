@@ -20,6 +20,7 @@ jobs:
         #  - 6.6-rc4-rk3588
           - 6.6-rc5-rk3588
           - 6.6-rc6-rk3588
+          - 6.6-rc7-rk3588
 
     steps:
       - name: Checkout code
