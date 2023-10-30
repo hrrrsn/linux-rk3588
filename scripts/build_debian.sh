@@ -4,7 +4,7 @@
   root_dir=$work_dir/root
 
   debian_version=bookworm
-  install_desktop="gnome"
+  # install_desktop="gnome"
 
   disk_image=$work_dir/$debian_version.img
   disk_size="20G"
@@ -75,8 +75,15 @@
   chroot $root_dir /bin/bash -c "update-grub; cp /boot/efi/EFI/debian/grubaa64.efi /boot/efi/EFI/BOOT/BOOTAA64.EFI"
   echo "\EFI\debian\grubaa64.efi" > $root_dir/boot/efi/startup.nsh
 
+  cp $root_dir/boot/grub/grub.cfg $root_dir/boot/grub/grub.cfg.original
   loop_uuid=$(blkid -s UUID -o value /dev/loop0p2)
   sed -i 's/$loop_uuid/$root_uuid/g' $root_dir/boot/grub/grub.cfg
+
+  echo "# debug: loop_uuid: $loop_uuid" | tee -a $root_dir/boot/grub/grub.cfg
+  echo "# debug: efi_uuid: $efi_uuid" | tee -a $root_dir/boot/grub/grub.cfg
+  echo "# debug: root_uuid: $root_uuid" | tee -a $root_dir/boot/grub/grub.cfg
+  
+
   sed -i "s|root=/dev/loop0p2|root=ROOTUUID=$root_uuid|g" $root_dir/boot/grub/grub.cfg
   echo "UUID=$root_uuid /               ext4    errors=remount-ro 0       1" > $root_dir/etc/fstab
 
