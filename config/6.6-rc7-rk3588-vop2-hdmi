@@ -1,0 +1,8 @@
+LINUX_GIT_REPO="https://github.com/andyshrk/linux.git"
+LINUX_GIT_BRANCH="rk388-vop2-hdmi-upstream-2023-1027-v2"
+LINUX_DEFCONFIG="rockchip_defconfig"
+
+ZFS_GIT_REPO="https://github.com/openzfs/zfs.git"
+ZFS_GIT_BRANCH="master"
+
+LINUX_VERSION="6.6-rc7-rk3588-vop2-hdmi"
