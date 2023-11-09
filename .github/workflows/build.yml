@@ -1,10 +1,6 @@
 name: Build Kernel
 run-name: Build Linux Kernel for Rockchip RK3588
 
-permissions:
-  contents: write
-  actions: read
-
 on:
   workflow_dispatch:
     inputs:
@@ -51,41 +47,13 @@ jobs:
         shell: bash
         run: sudo ./build.sh ${{ matrix.kernel }}
 
-      # - name: Upload server image
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: ${{ matrix.kernel }}
-      #     path: ${{ runner.workspace }}/build/*${{ matrix.kernel }}*.deb
-      #     if-no-files-found: error
-      #     retention-days: 30
-
-      - name: Create GitHub Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          RESPONSE=$(curl -X POST \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/${{ github.repository }}/releases \
-            -d '{"tag_name": "temp_${{ matrix.kernel }}", "name": "Release ${{ matrix.kernel }}", "body": "Description", "draft": false, "prerelease": false, "generate_release_notes": false}')
-          echo "Response: $RESPONSE"
-          UPLOAD_URL=$(echo $RESPONSE | jq .upload_url | tr -d '"')
-          echo "UPLOAD_URL=${UPLOAD_URL}" >> $GITHUB_ENV
-
-      - name: Upload Release Assets
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          UPLOAD_URL: ${{ env.UPLOAD_URL }}
-        run: |
-          for file in ${{ runner.workspace }}/build/*${{ matrix.kernel }}*.deb; do
-            echo "Uploading ${file}..."
-            curl -X POST \
-              -H "Authorization: token $GITHUB_TOKEN" \
-              -H "Accept: application/vnd.github.v3+json" \
-              -H "Content-Type: application/octet-stream" \
-              --data-binary @"${file}" \
-              "${UPLOAD_URL}?name=$(basename ${file})&label=$(basename ${file})"
-          done
+      - name: Upload server image
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.kernel }}
+          path: ${{ runner.workspace }}/build/*${{ matrix.kernel }}*.deb
+          if-no-files-found: error
+          retention-days: 30
 
       - name: Clean artifacts
         shell: bash
