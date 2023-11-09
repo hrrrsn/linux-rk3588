@@ -1,6 +1,10 @@
 name: Build Kernel
 run-name: Build Linux Kernel for Rockchip RK3588
 
+permissions:
+  contents: write
+  actions: read
+
 on:
   workflow_dispatch:
     inputs:
